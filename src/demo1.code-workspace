@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "../../demo1"
+		},
+		{
+			"path": "../.."
+		},
+		{
+			"path": "../../../HTML CSS"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "HTML CSS"
+	}
+}
