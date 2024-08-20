@@ -24,120 +24,47 @@ const dateForm = "YYYY/MM/DD";
 const data = [
   {
     key: "1",
-    name: (
-      <aside className="name">
-        Tên Phụ Huynh
-        <p>
-          <PhoneOutlined /> 0971405427
-        </p>
-        <p>
-          <MailOutlined /> n/a
-        </p>
-      </aside>
-    ),
-    tags1: (
-      <div>
-        <Tag color="default" style={{ width: 121, height: 20 }}>
-          Không có nhu cầu
-        </Tag>
-        <p style={{ margin: 0 }}>Phụ huynh đã cho con học trường gần nhà</p>
-      </div>
-    ),
+    name: "Tên Phụ Huynh",
+    status: ["Không có nhu cầu"],
     chuongTrinhHoc: "ADVENTURE",
     coSo: "Tây Hồ Tây",
-    tags: ["cán bộ nhân viên"],
+    tags: ["Cán bộ nhân viên"],
     time: "14:05 - 16/02/2024",
   },
   {
     key: "2",
-    name: (
-      <aside className="name">
-        Anh Bắc
-        <p>
-          <PhoneOutlined /> 0971405427
-        </p>
-        <p>
-          <MailOutlined /> phong.nx921@gmail.com
-        </p>
-      </aside>
-    ),
-    tags1: (
-      <Tag color="processing" style={{ width: 73, height: 20 }}>
-        Ghi danh
-      </Tag>
-    ),
+    name: "Tên Phụ Huynh",
+    status: ["Ghi danh"],
     chuongTrinhHoc: "DISCOVER",
     coSo: "Tây Hồ Tây",
-    tags: ["phụ huynh học sinh"],
+    tags: ["Phụ huynh học sinh"],
     time: "14:05 - 16/02/2024",
   },
   {
     key: "3",
-    name: (
-      <aside className="name">
-        Nguyễn Thanh Nhân
-        <p>
-          <PhoneOutlined /> 0971405427
-        </p>
-        <p>
-          <MailOutlined /> n/a
-        </p>
-      </aside>
-    ),
-    tags1: (
-      <Tag color="volcano" style={{ width: 108, height: 20 }}>
-        Đang chăm sóc
-      </Tag>
-    ),
+    name: "Tên Phụ Huynh",
+    status: ["Đang chăm sóc"],
     chuongTrinhHoc: <p style={{ fontWeight: 100 }}>n/a</p>,
     coSo: "Dương Kinh",
-    tags: ["phụ huynh học sinh"],
+    tags: ["Phụ huynh học sinh"],
     time: "14:05 - 16/02/2024",
   },
   {
     key: "4",
-    name: (
-      <aside className="name">
-        Tên Phụ Huynh
-        <p>
-          <PhoneOutlined /> 0971405427
-        </p>
-        <p>
-          <MailOutlined /> n/a
-        </p>
-      </aside>
-    ),
-    tags1: (
-      <Tag color="success" style={{ width: 93, height: 20 }}>
-        Đã nhập học
-      </Tag>
-    ),
+    name: "Tên Phụ Huynh",
+    status: ["Đã nhập học"],
     chuongTrinhHoc: <p style={{ fontWeight: 100 }}>n/a</p>,
     coSo: "Cầu Giấy",
-    tags: ["phụ huynh học sinh"],
+    tags: ["Phụ huynh học sinh"],
     time: "14:05 - 16/02/2024",
   },
   {
     key: "5",
-    name: (
-      <aside className="name">
-        Tên Phụ Huynh
-        <p>
-          <PhoneOutlined /> 0971405427
-        </p>
-        <p>
-          <MailOutlined /> n/a
-        </p>
-      </aside>
-    ),
-    tags1: (
-      <Tag color="red" style={{ width: 107, height: 20 }}>
-        Trùng thông tin
-      </Tag>
-    ),
+    name: "Tên Phụ Huynh",
+    status: ["Trùng Thông tin"],
     chuongTrinhHoc: <p style={{ fontWeight: 100 }}>n/a</p>,
     coSo: "Ocean Park",
-    tags: ["cán bộ nhân viên"],
+    tags: ["Cán bộ nhân viên"],
     time: "14:05 - 16/02/2024",
   },
 ];
@@ -264,8 +191,46 @@ function App() {
               title="Phụ Huynh Được Giới Thiệu"
               dataIndex="name"
               key="name"
+              render={(name) => (
+                <aside className="name">
+                  Tên Phụ Huynh
+                  <p>
+                    <PhoneOutlined /> 0971405427
+                  </p>
+                  <p>
+                    <MailOutlined /> n/a
+                  </p>
+                </aside>
+              )}
             />
-            <Column title="Trạng Thái" dataIndex="tags1" key="tags1" />
+            <Column
+              title="Trạng Thái"
+              dataIndex="status"
+              key="status"
+              render={(status) => (
+                <>
+                  {status.map((statu) => {
+                    let color;
+                    if (statu === "Không có nhu cầu") {
+                      color = "default";
+                    } else if (statu === "Ghi danh") {
+                      color = "processing";
+                    } else if (statu === "Đang chăm sóc") {
+                      color = "volcano";
+                    } else if (statu === "Đã nhập học") {
+                      color = "success";
+                    } else {
+                      color = "red";
+                    }
+                    return (
+                      <div key={statu}>
+                        <Tag color={color}>{statu}</Tag>
+                      </div>
+                    );
+                  })}
+                </>
+              )}
+            />
             <Column
               title="Chương Trình Học Quan Tâm"
               dataIndex="chuongTrinhHoc"
@@ -279,20 +244,19 @@ function App() {
               render={(tags) => (
                 <>
                   {tags.map((tag) => {
-                    let color = tag.length > 5 ? "geekblue" : "green";
-                    if (tag === "phụ huynh học sinh") {
+                    let color;
+                    if (tag === "Phụ huynh học sinh") {
                       color = "volcano";
+                    } else {
+                      color = "geekblue";
                     }
                     return (
                       <div className="userOut" key={tag}>
                         <div>
-                          <Tag color={color} style={{ width: 125, height: 20 }}>
-                            {tag.toLowerCase()}
-                          </Tag>
+                          <Tag color={color}>{tag}</Tag>
                         </div>
                         <img
-                          src="https://storage-vnportal.vnpt.vn/nan-ubnd/1/quantritintuc/3638031579059476963.jpg"
-                          alt=""
+                          src="https://storage-vnportal.vnpt.vn/nan-ubnd/1/quantritintuc/3638031579059476963.jpg" alt=""
                           style={{ width: 38, height: 38 }}
                         />
                         <b>Tên Nhân Viên</b>
